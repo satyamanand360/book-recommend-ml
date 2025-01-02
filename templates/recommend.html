@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Recommendation Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        header {
+            background-color: #6200ea;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+        }
+        nav {
+            background-color: #3700b3;
+            display: flex;
+            justify-content: center;
+            padding: 0.5rem 0;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: #bb86fc;
+        }
+        .form-container {
+            text-align: center;
+            margin: 20px;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .form-container input[type="text"] {
+            padding: 10px;
+            width: 50%;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        .form-container button {
+            padding: 10px 20px;
+            background-color: #6200ea;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .form-container button:hover {
+            background-color: #3700b3;
+        }
+        .form-container p {
+            margin-top: 10px;
+            font-size: 1rem;
+            color: red;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 200px;
+            overflow: hidden;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+        .card img {
+            width: 100%;
+            height: auto;
+        }
+        .card-content {
+            padding: 15px;
+        }
+        .card-content h3 {
+            font-size: 1rem;
+            margin: 0.5rem 0;
+        }
+        .card-content p {
+            font-size: 0.9rem;
+            margin: 0.3rem 0;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Book Recommender</h1>
+</header>
+
+<nav>
+    <a href="/">Home</a>
+    <a href="/recommend">Book Recommender</a>
+    <a href="/about">About Us</a>
+</nav>
+
+<div class="form-container">
+    <form action="/recommend_books" method="POST">
+        <input type="text" name="book_name" placeholder="Enter a book name" required>
+        <button type="submit">Submit</button>
+    </form>
+    {% if error %}
+        <p>{{ error }}</p>
+    {% endif %}
+</div>
+
+<div class="container">
+    {% if data %}
+        {% for i in data %}
+        <div class="card">
+            <img src="{{ i[2] }}" alt="{{ i[0] }}">
+            <div class="card-content">
+                <h3>{{ i[0] }}</h3>
+                <p>Author: {{ i[1] }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p style="text-align: center; color: #555;">No recommendations to display. Enter a book name above!</p>
+    {% endif %}
+</div>
+
+</body>
+</html>
